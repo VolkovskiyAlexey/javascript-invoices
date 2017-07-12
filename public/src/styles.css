@@ -1,0 +1,11 @@
+/* fix modal in ng-bootstrap */
+
+.modal-backdrop.show {
+    opacity: 0.5;
+}
+
+.modal.show{opacity: 1;}
+
+.modal .modal-dialog {
+    transform: initial !important;
+}

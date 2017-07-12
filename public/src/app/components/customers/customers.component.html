@@ -1,0 +1,26 @@
+<h1>Customers</h1>
+
+<div class="form-group">
+  <button class="btn btn-primary" (click)="add()">New Customer</button>
+</div>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th width="1%"></th>
+  </tr>
+
+  <tr *ngFor="let customer of customers">
+    <td>{{ customer.id }}</td>
+    <td>{{ customer.name}}</td>
+    <td>{{ customer.address }}</td>
+    <td>{{ customer.phone }}</td>
+    <td>
+      <button class="btn btn-info btn-xs" (click)="edit(customer)">Edit</button>
+    </td>
+  </tr>
+
+</table>

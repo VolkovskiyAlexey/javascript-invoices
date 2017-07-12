@@ -1,0 +1,96 @@
+<h1>{{ invoiceId ? 'Edit Invoice' : 'New Invoice' }}</h1>
+<hr>
+<form novalidate [formGroup]="invoiceFormGroup">
+
+  <div class="form-group">
+    <button class="btn btn-primary btn-sm" (click)="createCustomer()">Create Customer</button>
+    <button class="btn btn-primary btn-sm" (click)="createProduct()">Create Product</button>
+  </div>
+
+  <hr>
+
+  <div class="row">
+
+    <div class="col-sm-6">
+
+      <div class="form-group">
+        <label class="control-label">Customer:</label>
+        <div class="row">
+          <div class="col-sm-6">
+            <select class="form-control" name="customer_id" formControlName="customer_id" >
+              <option *ngFor="let customer of customers" [selected]="customer.id === invoiceFormGroup.controls['customer_id'].value" [value]="customer.id">{{ customer.name }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products -->
+
+      <div class="form-group" [formGroup]="invoiceItemsFormGroup">
+        <label class="control-label">Products:</label>
+
+        <table class="table table-bordered" formGroupName="invoiceItems">
+          <tr>
+            <th>Name</th>
+            <th>Count</th>
+            <th>Action</th>
+          </tr>
+          <tr *ngFor="let invoiceItem of invoiceItemsFormArray.getRawValue(); let i = index;" [formGroupName]="i">
+            <td>
+              <select class="form-control input-sm" name="product_id" formControlName="product_id" >
+                <option *ngFor="let product of products" [selected]="product.id === invoiceItem.product_id" [value]="product.id">{{ product.name }} ({{ product.price | currency : 'USD': true }})</option>
+              </select>
+            </td>
+            <td>
+              <input min="1" formControlName="quantity" type="number" class="form-control input-sm">
+            </td>
+            <td style="white-space: nowrap">
+              <button class="btn btn-danger btn-sm" (click)="removeInvoiceItem(invoiceItem)">Remove</button>
+            </td>
+          </tr>
+
+          <!-- new product -->
+
+          <tr [formGroup]="newInvoiceItemFormGroup" class="success">
+            <td>
+              <select class="form-control input-sm" name="product_id" formControlName="product_id">
+                <option *ngFor="let product of products" [selected]="product.id === newInvoiceItemFormGroup.controls['product_id'].value" [value]="product.id">{{ product.name }} ({{ product.price | currency : 'USD': true }})</option>
+              </select>
+            </td>
+            <td>
+              <input min="1"  name="quantity" type="number" formControlName="quantity" class="form-control input-sm">
+            </td>
+            <td>
+              <button class="btn btn-success btn-sm" (click)="createInvoiceItem()">Add</button>
+            </td>
+          </tr>
+
+        </table>
+
+      </div> <!-- /products -->
+
+      <div class="form-group">
+        <label class="control-label">Discount:</label>
+        <div class="row">
+          <div class="col-sm-6">
+            <input min="0" max="100" formControlName="discount" name="discount" type="number" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Total:</label>
+        <div class="form-control-static">{{ invoiceFormGroup.controls['total'].value | currency: 'USD' : true }}</div>
+      </div>
+
+      <!-- create invoice -->
+
+      <div *ngIf="!invoiceId" class="form-group">
+        <button class="btn btn-primary" (click)="createInvoice()">Create Invoice</button>
+      </div>
+
+    </div>
+  </div>
+
+
+</form>

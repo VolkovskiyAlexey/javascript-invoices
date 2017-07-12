@@ -1,0 +1,24 @@
+<h1>Products</h1>
+
+<div class="form-group">
+  <button class="btn btn-primary" (click)="add()">New Product</button>
+</div>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th width="1%"></th>
+  </tr>
+
+  <tr *ngFor="let product of products">
+    <td>{{ product.id }}</td>
+    <td>{{ product.name}}</td>
+    <td>{{ product.price | currency: 'USD' : true }}</td>
+    <td>
+      <button class="btn btn-info btn-xs" (click)="edit(product)">Edit</button>
+    </td>
+  </tr>
+
+</table>

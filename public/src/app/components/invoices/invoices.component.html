@@ -1,0 +1,27 @@
+<h1>Invoices</h1>
+
+<div class="form-group">
+  <a class="btn btn-primary" [routerLink]="['invoices-new']">New Invoice</a>
+
+</div>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Id</th>
+    <th>Customer</th>
+    <th>Discount</th>
+    <th>Total</th>
+    <th width="1%"></th>
+  </tr>
+
+  <tr *ngFor="let invoice of invoices">
+    <td>{{ invoice.id }}</td>
+    <td>{{ customersById[invoice.customer_id]?.name}}</td>
+    <td>{{ invoice.discount }}</td>
+    <td>{{ invoice.total | currency: 'USD' : true }}</td>
+    <td>
+      <a class="btn btn-info btn-xs" [routerLink]="['/invoices', invoice.id]">Edit</a>
+    </td>
+  </tr>
+
+</table>
